@@ -3,7 +3,7 @@ package task.utils.db;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-// Информация из Ubuntu
+// Информация из Windows 2
 public class DBUtils {
 
     /**

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.home.education</groupId>
+    <artifactId>SQL.CompleteGuide.all</artifactId>
+    <version>2.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>task.utils</module>
+        <module>chapter06</module>
+        <module>chapter07</module>
+        <module>chapter08</module>
+        <module>chapter09</module>
+        <module>chapter10</module>
+        <module>chapter12</module>
+        <module>chapter13</module>
+        <module>chapter14</module>
+        <module>chapter15</module>
+        <module>chapter20</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.home.education</groupId>
+            <artifactId>OrderTestClasses</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-artifact</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${project.groupId}</groupId>
+                                        <artifactId>${project.artifactId}</artifactId>
+                                        <version>${project.version}</version>
+                                        <type>${project.packaging}</type>
+                                    </artifactItem>
+                                </artifactItems>
+                                <outputDirectory>../out/artifacts</outputDirectory>
+                            </configuration>
+                        </execution>
+
+                        <execution>
+                            <id>copy-dependencies-artifact</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>../out/artifacts</outputDirectory>
+                                <includeScope>compile</includeScope>
+                            </configuration>
+                        </execution>
+
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- Чтобы заставить maven отображать заданные @DisplayName (вариант 2) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>me.fabriciorby</groupId>
+                        <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+                        <version>1.4.0</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <reportFormat>plain</reportFormat>
+                    <consoleOutputReporter>
+                        <disable>true</disable>
+                    </consoleOutputReporter>
+                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
+
+                    <!-- * Это для указания параметра JUnit для сортировки классов тестирования ********* -->
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.testclass.order.default=order.test.classes.AnnotationTestsOrderer
+                        </configurationParameters>
+                    </properties>
+                    <!-- ******************************************************************************** -->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>delete-out</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>out</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                        <inherited>false</inherited>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+    </build>
+
+</project>

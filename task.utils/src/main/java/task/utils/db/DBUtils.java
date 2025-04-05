@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 // Информация из Windows 2
+// Информация из Ubuntu 2
 public class DBUtils {
 
     /**

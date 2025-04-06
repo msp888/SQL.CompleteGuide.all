@@ -12,6 +12,7 @@ public class Task_6_02 {
 
     public static void main(String[] args) throws IOException
     {
+        System.out.println("Изучаем Git...");
         try (Connection conn = DBUtils.getConnection())
         {
             try (Statement stat = conn.createStatement())

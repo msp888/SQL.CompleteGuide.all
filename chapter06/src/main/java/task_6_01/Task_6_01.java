@@ -9,6 +9,7 @@ public class Task_6_01 {
 
     public static void main(String[] args) throws IOException, SQLException
     {
+        System.out.println("Изучаем Git...");
         try (Connection conn = DBUtils.getConnection())
         {
             try (Statement stat = conn.createStatement())
